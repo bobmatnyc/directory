@@ -11,8 +11,8 @@
 # the same stretch of a session, quiet pointers (a memory only a link reaches
 # can come up on its own), and headless dreaming. Interference stays partly
 # built until the contradictions work (merged, not yet released) ships, so it
-# shows as `dev`. Some code links are pinned to the 0.3.6 release commit
-# (0f5f73d); the rest point at master.
+# shows as `dev`. Links to single files are pinned to the 0.3.7 release commit
+# (4b56e52); the rest point at master.
 
 slug: counterparts
 name: Counterparts
@@ -84,7 +84,7 @@ mechanisms:
     note: >-
       Every memory gets an importance score as it's written, mostly Claude's own judgement.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/encode/salience.ts
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/encode/salience.ts
 
   emotional:
     status: built
@@ -94,7 +94,7 @@ mechanisms:
       felt one lasts about 1.7 times as long. Only feelings Claude records count; nothing
       guesses them from the words.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/physics/index.ts
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/physics/index.ts
 
   decay:
     status: built
@@ -103,7 +103,7 @@ mechanisms:
       Unused memories fade over the days you actually use it. Very faint ones are filed away,
       not deleted.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/sleep/decay.ts
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/sleep/decay.ts
 
   interference:
     status: partial
@@ -117,7 +117,7 @@ mechanisms:
         Coming: when a newer memory changes an older one, the older one fades rather than
         competing.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/dream/CONTRACT.md
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/dream/CONTRACT.md
 
   retrieval:
     status: built
@@ -151,7 +151,7 @@ mechanisms:
       After sessions, memories that held up get stronger and the steadiest become core. Once a
       day a background dream merges near-copies, links and replays, unless you turn it off.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/dream/CONTRACT.md
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/dream/CONTRACT.md
 
   reconsolidation:
     status: built
@@ -166,7 +166,7 @@ mechanisms:
         the old memory gradually, a correction retires it (still readable by its id), and an
         open disagreement keeps both side by side; each settle is recorded and can be undone.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/revision.ts
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/revision.ts
 
   episodic-semantic:
     status: built
@@ -187,7 +187,7 @@ mechanisms:
       note: >-
         Coming: beliefs about people and projects that change only when the evidence adds up.
     source: >-
-      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/schemas/index.ts
+      https://github.com/mlapeter/counterparts/blob/4b56e52b6a58f6636a4f89fed01e790be76eec9f/src/core/schemas/index.ts
 
 flow:
   steps:

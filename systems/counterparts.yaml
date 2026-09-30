@@ -1,18 +1,18 @@
 # Counterparts, as counterparts.ai/directory/counterparts/ shows it.
 
-# Rated by the same rubric as everyone else, gaps included. Re-checked
-# 2026-09-29 against counterparts@0.3.6, the version on npm then (release commit
-# 0f5f73d, which the code links below are pinned to). First graded 2026-09-25
+# Rated by the same rubric as everyone else, gaps included. Graded against
+# counterparts@0.3.7, the version on npm on 2026-09-29. First graded 2026-09-25
 # against 0.3.1. What changed since: 0.3.3 (26 Sep) dated reminders that come
 # back on the day, and feelings that hold a memory higher and slow its fading;
 # 0.3.4 (26 Sep) memories that come back fade more slowly, and dreaming (merge
 # near-copies, link, replay, write a pattern, flag a contradiction); 0.3.5
 # (27 Sep) a reflection after each dream; 0.3.6 (28 Sep) the nightly run,
 # started on its own once a day unless turned off; 0.3.7 (29 Sep) links from
-# the same stretch of a session and quiet pointers (a memory only a link
-# reaches can come up on its own), and headless dreaming. As of 2026-09-29:
-# association and gist are built (3); interference stays partly built until the
-# contradictions work (merged, not yet released) ships, so it shows as `dev`.
+# the same stretch of a session, quiet pointers (a memory only a link reaches
+# can come up on its own), and headless dreaming. Interference stays partly
+# built until the contradictions work (merged, not yet released) ships, so it
+# shows as `dev`. Some code links are pinned to the 0.3.6 release commit
+# (0f5f73d); the rest point at master.
 
 slug: counterparts
 name: Counterparts

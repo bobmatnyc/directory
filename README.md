@@ -70,3 +70,11 @@ The directory is maintained by [Mike LaPeter](https://mikelapeter.com), who make
 [Counterparts](https://counterparts.ai), one of the systems listed. Counterparts is graded
 by the same rules as everyone else, and its file is here to correct like any other:
 [`systems/counterparts.yaml`](systems/counterparts.yaml).
+
+## Licence
+
+The entries and the rubric (`systems/`, `mechanisms.yaml`, `template.yaml` and these
+documents) are under [CC BY 4.0](LICENSE): reuse them freely, with credit to "the
+Counterparts directory" and a link back. The scripts and the schema (`scripts/`,
+`schema/`, `.github/`) are under the [MIT licence](LICENSE-CODE). By opening a pull
+request you agree to share your changes on the same terms.

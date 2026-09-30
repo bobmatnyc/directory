@@ -1,0 +1,14 @@
+{
+  "name": "counterparts-directory",
+  "private": true,
+  "type": "module",
+  "description": "The data behind counterparts.ai/directory: one file per AI memory system.",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "links": "node scripts/check.mjs --links"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "yaml": "2.9.1"
+  }
+}

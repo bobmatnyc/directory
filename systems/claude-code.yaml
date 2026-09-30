@@ -1,0 +1,225 @@
+# Claude Code memory, as counterparts.ai/directory/claude-code/ shows it.
+
+# Researched 2026-09-29 against Claude Code's current docs and changelog
+# (v2.1.284, 28 Sep 2026). Claude Code's memory changed a lot in 2026: until
+# February it was only the CLAUDE.md files you write yourself. Auto memory
+# (notes Claude writes for itself) arrived in 2.1.32 (5 Feb 2026) and was on
+# for everyone by 2.1.59 (26 Feb). Since then: shared across git worktrees
+# (2.1.63), a 25KB cap on the MEMORY.md index (2.1.83), last-modified
+# timestamps on notes (2.1.75, ISO `modified` field in 2.1.214), subagent
+# memory, a separate cloud "project memory" (Projects beta), and AGENTS.md
+# support (2.1.277). The changelog also mentions "recalled" memory notes,
+# memory extraction and team memory stores (`CLAUDE_MEMORY_STORES`), which
+# the docs don't describe; nothing here is graded on them. No memory roadmap
+# is published.
+
+slug: claude-code
+name: Claude Code memory
+tagline: >-
+  Plain notes files a coding agent reads every session: rules you write, plus notes it keeps for
+  itself.
+category: work
+alsoIn:
+  - user
+maker: Anthropic
+links:
+  website: https://code.claude.com/docs/en/memory
+  repos:
+    - anthropics/claude-code
+  packages:
+    - registry: npm
+      name: "@anthropic-ai/claude-code"
+# the GitHub repo holds the changelog, issues and plugins; the CLI itself is "All rights reserved"
+openness: closed
+
+summary: >-
+  Claude Code has two kinds of memory, both plain text files. CLAUDE.md files are instructions
+  you write: for your whole company, for you, for a project, or just for you in one project.
+  They load at the start of every session. Auto memory is a folder of notes Claude writes for
+  itself as it works, like “you prefer pnpm” or “the API tests need a local Redis”. A short
+  index of those notes is read every session, and Claude opens the full notes when it needs
+  them.
+forWho: >-
+  Developers using Claude Code in the terminal, their editor or the desktop app, and teams who
+  want one set of project rules everyone’s Claude follows.
+remembers: >-
+  Your rules and project conventions (CLAUDE.md), and Claude’s own notes: who you are and how
+  you like to work, corrections you gave it, ongoing project decisions, and where to find things
+  outside the code.
+doesnt:
+  - >-
+    Nothing fades on its own. Notes stay until you or Claude edit or delete them, and only the
+    first 200 lines of the index are read at the start.
+  - When a note is rewritten, what it used to say isn’t kept anywhere.
+  - >-
+    Auto memory stays on one machine; it isn’t shared across computers or with cloud sessions
+    (cloud Projects keep a separate memory).
+  - >-
+    It’s work memory for a coding agent, not the AI’s own sense of self. No emotional weighting
+    is documented.
+standout:
+  - >-
+    Radically simple and inspectable: every memory is a markdown file you can read, edit, or
+    delete, and the /memory command opens them.
+  - >-
+    Layered instructions that fit real teams: company-wide, personal, per project and per
+    folder, with rules that load only when Claude touches matching files.
+  - >-
+    Instructions survive long sessions: after the conversation is compacted, the project’s
+    CLAUDE.md and the memory index are read back from disk.
+  - >-
+    Honest about limits: the docs say plainly that memory is context Claude tries to follow, not
+    enforced settings, and point to hooks for hard rules.
+
+facts:
+  lives: Your machine (plain files)
+  local: true
+  keys: A Claude plan login, an API key, or a cloud provider
+  worksWith:
+    - Claude Code CLI
+    - VS Code
+    - Claude desktop app
+    - Agent SDK
+    - AGENTS.md files
+  license: Proprietary (Anthropic Commercial Terms)
+  price: Comes with Claude Pro, Max, Team or Enterprise, or pay per use with an API key
+  tags:
+    runs:
+      - local
+    needs:
+      - account
+      - model-key
+    works:
+      - CLI
+      - VS Code
+      - Desktop app
+      - Agent SDK
+      - AGENTS.md
+
+hood:
+  writes: >-
+    You write CLAUDE.md files. Claude writes its auto memory notes itself during the session,
+    deciding what will be useful next time and skipping what the code already shows.
+  stores: >-
+    Markdown files: CLAUDE.md in your project and home folder, and a per-project memory folder
+    under ~/.claude with a MEMORY.md index and one file per note.
+  finds: >-
+    No search engine. CLAUDE.md and the index load at the start; nested CLAUDE.md files and path
+    rules load when Claude reads matching files; Claude opens notes with its normal file tools.
+  cost: >-
+    No separate AI call is documented: notes are written by the same Claude, as part of the
+    session, using the context they take up.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      Claude decides what’s worth saving and sorts notes into four kinds, skipping what the code
+      already shows. There’s no importance score.
+    source: https://code.claude.com/docs/en/memory#auto-memory
+
+  emotional:
+    status: unknown
+    note: The docs describe four kinds of note and never mention weighting by feeling.
+
+  decay:
+    status: none
+    note: >-
+      Notes stay until you or Claude edit or delete them, and they’re kept out of the
+      old-transcript cleanup. The 200-line index cap is a size limit, not fading.
+    source: https://code.claude.com/docs/en/memory#storage-location
+
+  interference:
+    status: partial
+    depth: 1
+    note: >-
+      Each note carries its last-changed date, and when the index gets long Claude is told to
+      merge or drop stale entries. Old and new are sorted out by Claude’s judgement.
+    source: https://code.claude.com/docs/en/memory#how-it-works
+
+  retrieval:
+    status: none
+    note: >-
+      Notes load by their place in the index or when Claude opens them. The only date kept is
+      when a note was last written, so reading one doesn’t strengthen it.
+    source: https://code.claude.com/docs/en/memory#how-it-works
+
+  association:
+    status: partial
+    depth: 1
+    note: >-
+      The always-loaded index works as signposts to the notes behind it. There are no automatic
+      links between notes.
+    source: https://code.claude.com/docs/en/memory#storage-location
+
+  prospective:
+    status: partial
+    depth: 2
+    note: >-
+      Folder CLAUDE.md files and path rules come back on their own when Claude touches matching
+      files, but only for rules you wrote. Its own notes wait to be opened.
+    source: https://code.claude.com/docs/en/memory#path-specific-rules
+
+  consolidation:
+    status: partial
+    depth: 1
+    note: >-
+      Claude tidies the index when it nears its size limit, moving detail into topic files and
+      merging entries, but during a session. No pass between sessions is documented.
+    source: https://code.claude.com/docs/en/memory#how-it-works
+
+  reconsolidation:
+    status: partial
+    depth: 1
+    note: >-
+      Claude edits a note in place when things change and the date updates, but the docs
+      describe no history of what it said before.
+    source: https://code.claude.com/docs/en/memory#how-it-works
+
+  episodic-semantic:
+    status: partial
+    depth: 1
+    note: >-
+      Notes are lessons drawn from sessions (corrections, approaches you confirmed), written by
+      Claude rather than a separate mechanism.
+    source: https://code.claude.com/docs/en/memory#auto-memory
+
+  schema:
+    status: partial
+    depth: 1
+    note: >-
+      Notes about you and the project are read every session and shape how it works, but new
+      facts aren’t explicitly weighed against them.
+    source: https://code.claude.com/docs/en/memory#auto-memory
+
+flow:
+  steps:
+    - label: Session starts
+      detail: CLAUDE.md files and the first 200 lines of the memory index load.
+    - label: It works
+      detail: Folder rules load as Claude reads matching files; it opens notes when it needs them.
+    - label: It takes notes
+      detail: Corrections and preferences worth keeping become short markdown notes.
+    - label: It tidies the index
+      detail: When the index grows long, Claude trims it and moves detail into topic files.
+  loop:
+    to: 0
+    label: next session
+
+checked: 2026-09-29
+sources:
+  - label: How Claude remembers your project
+    url: https://code.claude.com/docs/en/memory
+  - label: Subagent memory
+    url: https://code.claude.com/docs/en/sub-agents#enable-persistent-memory
+  - label: What survives compaction
+    url: https://code.claude.com/docs/en/context-window#what-survives-compaction
+  - label: Project memory (cloud Projects)
+    url: https://code.claude.com/docs/en/claude-projects
+  - label: Changelog
+    url: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+  - label: License
+    url: https://github.com/anthropics/claude-code/blob/main/LICENSE.md
+  - label: Plans and login
+    url: https://code.claude.com/docs/en/authentication

@@ -1,0 +1,221 @@
+# ChatGPT memory, as counterparts.ai/directory/chatgpt/ shows it.
+
+# Researched 2026-09-29 against OpenAI's help center, ChatGPT release notes
+# and product blog. ChatGPT memory has changed a lot: saved memories arrived
+# in Apr 2024; "reference chat history" (the first version of what OpenAI now
+# calls dreaming) in Apr 2025, reaching Free users in Jun 2025; automatic
+# prioritising of saved memories (Plus and Pro) in Oct 2025; memory Sources
+# under answers in May 2026. On 4 Jun 2026 memory was rebuilt around
+# dreaming: a background process that rewrites memory from many chats and
+# keeps it current, shown as a "memory summary", with the old list of saved
+# memories kept as a "legacy" option. It reached Plus and Pro in the US
+# first; Free, Go and other countries were promised "over the coming weeks",
+# and the help center still says features vary by plan and region. Pulse
+# (proactive daily updates) was retired on 17 Jun 2026 in favour of
+# scheduled tasks. The Memory FAQ also moved to a new URL.
+
+slug: chatgpt
+name: ChatGPT memory
+tagline: >-
+  ChatGPT's built-in memory: it learns about you from your chats and keeps that picture up to
+  date.
+category: user
+alsoIn:
+  - work
+maker: OpenAI
+links:
+  website: https://help.openai.com/en/articles/8590148-memory-in-chatgpt
+# a feature inside ChatGPT; no code or package to run yourself
+openness: closed
+
+summary: >-
+  ChatGPT remembers you in two ways. Saved memories are short notes, written when you say
+  “remember this” or when ChatGPT decides something is useful. Chat history memory goes further:
+  a background process OpenAI calls “dreaming” reads across your past chats and keeps a running
+  picture of you up to date, so “you’re going to Singapore in July” becomes “you went to
+  Singapore” once the trip is over. You can read that picture as a memory summary, correct it by
+  typing, and see under each answer which memories shaped it.
+forWho: >-
+  Everyone who uses ChatGPT, from Free to Pro and business plans. Nothing to install: it's
+  managed in Settings, under Personalization and Memory.
+remembers: >-
+  Your preferences, goals, work, hobbies, plans and ongoing projects, drawn from saved memories,
+  past chats and custom instructions, and on some plans your Library files, connected apps like
+  Gmail, and (Pro and business plans on a Mac, opt-in) activity on your computer.
+doesnt:
+  - >-
+    It lives inside ChatGPT. There's no documented way to plug it into other AI tools, or to run
+    it yourself.
+  - >-
+    The memory summary is a high-level view and, by OpenAI's own account, doesn't show
+    everything that's remembered.
+  - >-
+    How memories are stored, linked or weighted isn't published, so much of what happens under
+    the hood can't be checked.
+  - >-
+    Since Pulse was retired, nothing comes back on its own: reminders are scheduled tasks you
+    ask for.
+  - >-
+    Deleting a chat doesn't delete a saved memory made from it. Each has to be removed
+    separately.
+standout:
+  - >-
+    Memory that knows time passes: dreaming revises plans into past events, so old facts stop
+    steering answers.
+  - >-
+    Sources under each answer show which memories and past chats shaped it, and let you fix,
+    delete or mark them not relevant.
+  - >-
+    Friendly controls for everyone: edit the summary by typing, “don't mention this again”,
+    temporary chats, and project-only memory that walls a project off from everything else.
+  - >-
+    Memory at huge scale: OpenAI cut the cost of dreaming about fivefold so Free users could
+    have it too.
+
+facts:
+  lives: OpenAI's cloud
+  local: false
+  keys: "None: sign in to ChatGPT"
+  worksWith:
+    - ChatGPT on the web
+    - iOS & Android apps
+    - Mac & Windows apps
+  license: Proprietary
+  price: Free (limited memory); more on Go, Plus and Pro
+  tags:
+    runs:
+      - cloud
+    needs:
+      - account
+    works:
+      - Web
+      - iOS & Android
+      - Mac & Windows
+
+hood:
+  writes: >-
+    You, by asking it to remember; ChatGPT, when it judges something useful; and a background
+    “dreaming” process that rewrites memory from many chats.
+  stores: >-
+    On OpenAI's servers, as saved memories and a synthesised summary. The details aren't
+    published.
+  finds: >-
+    ChatGPT looks for relevant memories and past chats when they're likely to help, not on every
+    reply. Sources show what it used.
+  cost: >-
+    Nothing extra to pay: dreaming runs in the background on OpenAI's side, within your plan.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      ChatGPT decides which details are worth keeping, and on Plus and Pro you can raise or
+      lower a memory's priority, but there's no documented importance score set as it's written.
+    source: https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+
+  emotional:
+    status: unknown
+    note: OpenAI doesn't say whether feelings in a conversation affect what's kept.
+
+  decay:
+    status: built
+    depth: 3
+    only: Plus & Pro
+    note: >-
+      Automatic memory management moves less important saved memories to the background, judged
+      by how recent they are and how often a topic comes up.
+    source: https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+
+  interference:
+    status: built
+    depth: 3
+    note: >-
+      Dreaming keeps memory current: when things change, the newer fact replaces the old one, so
+      a trip you were planning becomes a trip you took.
+    source: https://openai.com/index/chatgpt-memory-dreaming/
+
+  retrieval:
+    status: partial
+    depth: 1
+    only: Plus & Pro
+    note: >-
+      Topics you talk about often stay “top of mind”, but that follows the conversation, not
+      recalling the memory itself.
+    source: https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+
+  association:
+    status: unknown
+    note: >-
+      Whether memories are linked to each other isn't documented. It finds related past chats by
+      searching.
+
+  prospective:
+    status: partial
+    depth: 2
+    note: >-
+      You can ask for reminders as scheduled tasks, and tell the memory summary what topics to
+      bring up and when. Nothing surfaces purely on its own since Pulse was retired.
+    source: https://help.openai.com/en/articles/10291617-scheduled-tasks-in-chatgpt
+
+  consolidation:
+    status: built
+    depth: 3
+    note: >-
+      Dreaming is a background process that learns from many conversations and rebuilds memory
+      between chats.
+    source: https://openai.com/index/chatgpt-memory-dreaming/
+
+  reconsolidation:
+    status: partial
+    depth: 2
+    note: >-
+      Memory is updated as things change or when you say something is outdated, and saved
+      memories can keep a version history on some plans. Whether the summary keeps what it used
+      to say isn't documented.
+    source: https://help.openai.com/en/articles/8590148-memory-in-chatgpt
+
+  episodic-semantic:
+    status: built
+    depth: 3
+    note: >-
+      Dreaming turns many chats into a general picture of you: your preferences, projects and
+      constraints.
+    source: https://openai.com/index/chatgpt-memory-dreaming/
+
+  schema:
+    status: partial
+    depth: 2
+    note: >-
+      The memory summary is a picture of who you are that shapes answers, but how new facts are
+      weighed against it isn't documented.
+    source: https://help.openai.com/en/articles/8590148-memory-in-chatgpt
+
+flow:
+  steps:
+    - label: You chat
+      detail: Or ask it to remember something, which becomes a saved memory.
+    - label: It dreams
+      detail: In the background, it reads across your chats and updates its picture of you.
+    - label: Memory summary
+      detail: A readable overview you can correct by typing, or tell what not to mention.
+    - label: Next answer
+      detail: When it helps, it pulls in memories and past chats, and shows them as Sources.
+  loop:
+    to: 0
+    label: next chat
+
+checked: 2026-09-29
+sources:
+  - label: Memory in ChatGPT (help center)
+    url: https://help.openai.com/en/articles/8590148-memory-in-chatgpt
+  - label: "Dreaming: better memory for ChatGPT"
+    url: https://openai.com/index/chatgpt-memory-dreaming/
+  - label: ChatGPT release notes
+    url: https://help.openai.com/en/articles/6825453-chatgpt-release-notes
+  - label: Memory in projects
+    url: https://help.openai.com/en/articles/10169521-projects-in-chatgpt
+  - label: Scheduled tasks
+    url: https://help.openai.com/en/articles/10291617-scheduled-tasks-in-chatgpt
+  - label: Pricing
+    url: https://chatgpt.com/pricing

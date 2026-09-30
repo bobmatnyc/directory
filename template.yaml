@@ -1,0 +1,123 @@
+# A blank entry. Copy it to systems/<your-slug>.yaml and fill it in.
+# systems/mem0.yaml and systems/letta.yaml are good worked examples.
+# Write for a newcomer: plain words, short sentences, no marketing.
+
+slug: your-system            # the page's address: counterparts.ai/directory/your-system/
+name: Your System
+tagline: One plain line saying what it does.
+category: blocks             # whose memory is it? self (the AI's own) · user (memory about you)
+                             # · work (work & project memory) · blocks (building blocks for developers)
+alsoIn: []                   # other categories it also fits
+maker: Who makes it
+links:
+  website: https://example.com
+  repos:                     # GitHub owner/name, main one first (stars are fetched for you)
+    - owner/name
+  packages:                  # npm or pypi (weekly downloads are fetched for you)
+    - registry: npm
+      name: your-package
+openness: open               # open · partly · closed: how much of it people can read and run themselves
+
+summary: >-
+  A short paragraph a newcomer can follow: what happens to a conversation, what gets kept,
+  and how it comes back.
+forWho: Who it's for.
+remembers: What it remembers.
+doesnt:                      # what it doesn't do, said plainly (every system has some)
+  - One thing it doesn't do.
+standout:                    # its most distinctive ideas
+  - One thing that stands out.
+
+facts:
+  lives: Your machine        # where the memory lives, short
+  local: true                # can the memory live on the user's own machine?
+  keys: No keys              # what someone has to set up
+  worksWith:
+    - Claude Code
+  license: MIT
+  price: Free
+  tags:                      # the same facts as short tags, for the card
+    runs: [local]            # any of: local · server · cloud
+    needs: [none]            # any of: none · account · model-key · their-key
+    works: [Claude Code]     # worksWith, in a word or two each, the most useful first
+
+hood:                        # the four things a developer compares first
+  writes: Who decides what gets saved, and when.
+  stores: Where and in what it's kept.
+  finds: How memories are found again.
+  cost: AI calls beyond the conversation itself.
+
+# One grade for each of the 11 mechanisms. mechanisms.yaml says what each one
+# means and where the bar sits.
+#
+#   status: built     depth: 3 or 4    needs a `source` link
+#   status: partial   depth: 1 or 2    needs a `source` link
+#   status: none      (no depth)       it doesn't do this
+#   status: unknown   (no depth)       only for closed products whose docs don't say
+#
+# Optional on any grade:
+#   only: cloud only                   when just one edition has it
+#   dev:                               being built now, by your own account
+#     to: built                        how far it will go: built or partial
+#     note: "Coming: what's coming."
+mechanisms:
+  salience:
+    status: none
+    note: One plain sentence on what it does here, or doesn't.
+
+  emotional:
+    status: none
+    note: One plain sentence.
+
+  decay:
+    status: built
+    depth: 3
+    note: One plain sentence.
+    source: https://example.com/docs/where-this-is-shown
+
+  interference:
+    status: none
+    note: One plain sentence.
+
+  retrieval:
+    status: none
+    note: One plain sentence.
+
+  association:
+    status: none
+    note: One plain sentence.
+
+  prospective:
+    status: none
+    note: One plain sentence.
+
+  consolidation:
+    status: none
+    note: One plain sentence.
+
+  reconsolidation:
+    status: none
+    note: One plain sentence.
+
+  episodic-semantic:
+    status: none
+    note: One plain sentence.
+
+  schema:
+    status: none
+    note: One plain sentence.
+
+flow:                        # optional: a left-to-right sketch of how it works
+  steps:
+    - label: A conversation
+      detail: What happens first.
+    - label: Next step
+      detail: What happens next.
+  loop:                      # optional: an arrow from the last step back to an earlier one
+    to: 0                    # counted from 0
+    label: next conversation
+
+checked: 2026-01-01          # today's date: when this was last checked against the sources
+sources:
+  - label: Docs
+    url: https://example.com/docs

@@ -1,0 +1,227 @@
+# claude-mem, as counterparts.ai/directory/claude-mem/ shows it.
+
+# Researched 2026-09-29 against claude-mem v13.28.0 (26 Sep 2026): its repo,
+# docs and source. What changed in 2026: v13.0.0 (8 May) relicensed it from
+# AGPL-3.0 to Apache-2.0 and added an opt-in server runtime (Postgres). Since
+# the summer, a paid hosted "CMEM Pro" can run the note-taking AI and sync
+# memory across devices, and the installer now asks you to sign in and
+# defaults to it (free for up to 14 days, Sep 2026). The File Read Gate docs
+# still say it blocks file reads; the current code lets the read through and
+# adds the file's past notes alongside it. The price differs between
+# cmem.ai pages ($20/mo on the home page, $30/mo on the pricing page).
+
+slug: claude-mem
+name: claude-mem
+tagline: >-
+  A Claude Code plugin that quietly takes notes on your coding sessions and hands them back next
+  time.
+category: work
+maker: Alex Newman (thedotmack)
+links:
+  website: https://cmem.ai
+  repos:
+    - thedotmack/claude-mem
+  packages:
+    - registry: npm
+      name: claude-mem
+# everything memory-related is Apache-2.0; the hosted observer and sync are a paid service on top
+openness: open
+
+summary: >-
+  While you work in Claude Code, a second, hidden AI watches each step (every file read, edit
+  and command) and writes short notes about what was built, fixed or learned. After each reply
+  it also writes a summary: what you asked, what was found, what's next. When you start again,
+  the newest notes are laid out at the top of the chat, and Claude can search the rest by
+  keywords or meaning, then open just the notes it needs.
+forWho: >-
+  Developers using Claude Code and other coding agents who want the next session to pick up
+  where the last one left off, without writing notes themselves. It installs with one command; a
+  paid hosted plan adds sync across machines.
+remembers: >-
+  What happened while coding: bugs fixed, features built, decisions and discoveries, the files
+  each one touched, your prompts, and a summary of each exchange.
+doesnt:
+  - >-
+    Notes are written once and kept as they are. Nothing merges, fades or corrects them, so an
+    outdated note sits beside the newer one.
+  - >-
+    It remembers the work, not you: no beliefs about people or preferences, and no sense of self
+    for the AI.
+  - >-
+    The hidden note-taker is an extra AI working alongside every session, on your Claude plan by
+    default or on their hosted service.
+  - >-
+    Anonymous usage stats are on by default (one command turns them off), and cloud sync, if you
+    turn it on, uploads your notes and prompts.
+standout:
+  - >-
+    Fully automatic: there's nothing to remember to save. A silent observer turns raw tool
+    activity into tidy, labelled notes as you work.
+  - >-
+    Shows a cheap index first and fetches full detail only when needed, so memory doesn't eat up
+    the conversation.
+  - >-
+    Notes tied to files: when Claude opens a file it has worked on before, that file's history
+    comes up with it.
+  - >-
+    Huge reach: one of the most popular memory tools on GitHub, with notes in about 30 languages
+    and plugins for many coding agents.
+
+facts:
+  lives: Your machine (cloud sync optional)
+  local: true
+  keys: None on your Claude plan; or a CMEM Pro, Gemini or OpenRouter key
+  worksWith:
+    - Claude Code
+    - Codex
+    - Cursor
+    - OpenCode
+    - OpenClaw
+    - MCP tools
+  license: Apache-2.0
+  price: Free; hosted Pro $20–30/mo
+  tags:
+    runs:
+      - local
+      - cloud
+    needs:
+      - none
+      - model-key
+      - their-key
+    works:
+      - Claude Code
+      - Codex
+      - Cursor
+      - OpenCode
+      - OpenClaw
+      - MCP
+
+hood:
+  writes: >-
+    A separate “observer” AI (Claude Haiku by default) watches each tool step and writes notes,
+    plus a summary after each reply. The AI you talk to doesn't write them.
+  stores: >-
+    A SQLite database on your machine, with a local Chroma index for meaning-based search.
+    Optional sync to their cloud.
+  finds: >-
+    The newest 50 notes and recent summaries are shown at the start. After that, Claude searches
+    by keywords or meaning, looks at what happened around a note, and opens the ones it needs.
+  cost: >-
+    Yes: observer calls as you work, plus a summary each reply. They run on your Claude plan,
+    your own key, or their hosted observer.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      The observer is told what's worth recording and to skip routine steps, and it labels each
+      note (bugfix, decision…). There's no importance score.
+    source: https://github.com/thedotmack/claude-mem/blob/main/plugin/modes/code.json
+
+  emotional:
+    status: none
+    note: No emotional weighting. Notes are sorted by the kind of work, not by feeling.
+
+  decay:
+    status: partial
+    depth: 1
+    note: >-
+      Nothing fades note by note, but meaning-based search only looks back 90 days by default,
+      and the start of a session shows just the newest notes.
+    source: >-
+      https://github.com/thedotmack/claude-mem/blob/main/src/services/worker/search/strategies/ChromaSearchStrategy.ts
+
+  interference:
+    status: none
+    note: >-
+      Exact copies within a session are dropped, but a newer note that contradicts an older one
+      is simply stored beside it.
+    source: >-
+      https://github.com/thedotmack/claude-mem/blob/main/src/services/sqlite/SessionStore.ts
+
+  retrieval:
+    status: none
+    note: >-
+      Being found doesn't strengthen a note. A usage counter exists in the database, but nothing
+      updates it yet.
+    source: >-
+      https://github.com/thedotmack/claude-mem/blob/main/plans/21-sqlite-schema-evolution-and-queue-state.md
+    dev:
+      to: partial
+      note: >-
+        Their open fix plan (issue #3609) says the counter will go up each time a note is
+        recalled.
+
+  association:
+    status: partial
+    depth: 2
+    note: >-
+      Notes are tied to their files and their moment in a session, and a timeline tool brings up
+      what happened just before and after one. Notes aren't linked to each other.
+    source: https://github.com/thedotmack/claude-mem/blob/main/src/servers/mcp-server.ts
+
+  prospective:
+    status: partial
+    depth: 2
+    note: >-
+      When Claude opens a file it has notes on, that file's history is added on its own. There
+      are no reminders for a set time.
+    source: https://github.com/thedotmack/claude-mem/blob/main/src/cli/handlers/file-context.ts
+
+  consolidation:
+    status: none
+    note: >-
+      Nothing reworks notes between sessions. A summary is written after each reply, but old
+      notes stay as first written.
+
+  reconsolidation:
+    status: none
+    note: Nothing corrects an old note when it's contradicted; old and new sit side by side.
+
+  episodic-semantic:
+    status: partial
+    depth: 1
+    note: >-
+      Each reply's summary records what was learned, and on request a “knowledge agent” answers
+      questions from hundreds of notes at once. No lasting general lessons are written.
+    source: https://docs.claude-mem.ai/usage/knowledge-agents
+
+  schema:
+    status: none
+    note: >-
+      No beliefs about people or projects. An optional CLAUDE.md per folder lists recent
+      activity, not conclusions.
+
+flow:
+  steps:
+    - label: You work
+      detail: Claude reads, edits and runs commands as usual.
+    - label: A hidden observer
+      detail: Another AI watches each step and writes short, labelled notes.
+    - label: Sum it up
+      detail: "After each reply: what was asked, learned, done, and what's next."
+    - label: Store
+      detail: Saved in SQLite on your machine, searchable by keywords and meaning.
+    - label: Hand them back
+      detail: Next session, the newest notes come first; Claude searches for more.
+  loop:
+    to: 0
+    label: next session
+
+checked: 2026-09-29
+sources:
+  - label: claude-mem on GitHub
+    url: https://github.com/thedotmack/claude-mem
+  - label: Getting started
+    url: https://docs.claude-mem.ai/usage/getting-started
+  - label: Changelog
+    url: https://github.com/thedotmack/claude-mem/blob/main/CHANGELOG.md
+  - label: Knowledge agents
+    url: https://docs.claude-mem.ai/usage/knowledge-agents
+  - label: Cloud sync
+    url: https://docs.claude-mem.ai/cloud-sync
+  - label: Telemetry
+    url: https://docs.claude-mem.ai/telemetry
+  - label: Pricing
+    url: https://cmem.ai/pricing

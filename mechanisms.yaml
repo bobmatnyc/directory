@@ -1,0 +1,130 @@
+# The 11 mechanisms every system in the directory is graded on, and the bar for
+# each grade. They come from The Memory Field Guide
+# (https://counterparts.ai/ecosystem/), in the order a memory lives through
+# them: encoding, storage, retrieval, transformation.
+#
+# A grade is a status plus a depth:
+#
+#   not built            the system doesn't do this
+#   partly built   1     a little: a side effect, a narrow case, or something you
+#                        have to switch on or do yourself
+#                  2     partly: a real piece of it, on purpose, with a clear part missing
+#   built          3     built: it does what `built` below says
+#                  4     built in depth
+#   not known            a closed product whose docs don't say
+#
+# For each mechanism:
+#   built      what a system has to do to count as built (3)
+#   partly     what lifts "a little" (1) to "partly" (2)
+#   in-depth   what lifts "built" (3) to "built in depth" (4)
+#
+# The same bar applies to every system, Counterparts included. Think a bar is
+# wrong or unclear? Open an issue or a pull request against this file.
+
+- id: salience
+  name: Encoding & salience
+  short: Salience
+  stage: encoding
+  built: Decides what's worth keeping, and how much, as a memory is written.
+  partly: >-
+    An AI keeps or skips on purpose, by stated rules, not just a weight you set yourself.
+  in-depth: The importance score draws on several signals, some computed rather than claimed.
+
+- id: emotional
+  name: Emotional modulation
+  short: Emotion
+  stage: encoding
+  built: Gives memories written with feeling more weight.
+  partly: Feelings recorded on purpose, not noticed by the way.
+  in-depth: >-
+    Feeling changes several things (how high a memory sits, how slowly it fades, what a mood
+    brings to mind).
+
+- id: decay
+  name: Decay & forgetting
+  short: Forgetting
+  stage: storage
+  built: Lets unused memories fade over time on its own.
+  partly: Some things fade on purpose, not just a search window or an opt-in cleanup.
+  in-depth: >-
+    Each memory's own use, importance or feeling sets how fast it fades, and what fades is put
+    away, not lost.
+
+- id: interference
+  name: Interference
+  short: Interference
+  stage: storage
+  built: When a new memory closely matches an old one, notices and lets the newer one win.
+  partly: >-
+    A step on purpose spots near-copies or conflicts, not just an AI's judgement as it edits or
+    a check you turn on.
+  in-depth: >-
+    “newer” is judged by when things were true, or by weight of evidence, not arrival order.
+
+- id: retrieval
+  name: Retrieval & strengthening
+  short: Retrieval
+  stage: retrieval
+  built: Remembering something makes that memory stronger.
+  partly: Strengthening on purpose, not a side effect like busy topics staying near the top.
+  in-depth: >-
+    It lasts and is shaped: only real use counts, spaced returns count more, and it slows fading.
+
+- id: association
+  name: Association
+  short: Association
+  stage: retrieval
+  built: Links memories, so recalling one brings its neighbours.
+  partly: Links made on purpose (by use, file or time), not just an index pointing to notes.
+  in-depth: A weighted graph that recall can walk more than one step, or rank by distance.
+
+- id: prospective
+  name: Prospective memory
+  short: Prospective
+  stage: retrieval
+  built: Brings a memory back at the right time without being asked.
+  partly: Something remembered comes back on its own, if narrowly, not just a scheduled task.
+  in-depth: >-
+    More than one kind of cue (a date and a situation), or it works out the moment itself.
+
+- id: consolidation
+  name: Consolidation
+  short: Consolidation
+  stage: transformation
+  built: "Reworks memories between sessions: strengthening, merging, reorganising."
+  partly: Reworking on purpose, not only tidying inside a session when a size limit is hit.
+  in-depth: >-
+    The pass does several kinds of work (strengthen, merge, link, generalise), and each change
+    is recorded or reviewable.
+
+- id: reconsolidation
+  name: Reconsolidation
+  short: Reconsolidation
+  stage: transformation
+  built: Corrects a memory when it's contradicted, and keeps what it used to say.
+  partly: Old versions are kept, even if correcting is left to free editing or your own code.
+  in-depth: >-
+    A correction is weighed or dated: a firm memory needs more evidence, or you can ask what was
+    true when.
+
+- id: episodic-semantic
+  name: Episodic ↔ semantic
+  short: Gist
+  stage: transformation
+  built: Turns many specific moments into general knowledge.
+  partly: >-
+    A step on purpose draws lessons or patterns, not a side effect of saving or a summary on
+    request.
+  in-depth: >-
+    The general knowledge is checked: a guess until it proves true, checked against what's
+    known, or retired when outdated.
+
+- id: schema
+  name: Schema & assimilation
+  short: Schemas
+  stage: transformation
+  built: Forms beliefs about people and projects, and weighs new facts against them.
+  partly: >-
+    A kept picture of each person or project (a profile, page or summary), not just a place or
+    loose notes.
+  in-depth: Beliefs carry how sure it is, and change only when the evidence adds up.

@@ -1,0 +1,220 @@
+# Counterparts, as counterparts.ai/directory/counterparts/ shows it.
+
+# Rated by the same rubric as everyone else, gaps included. Re-checked
+# 2026-09-29 against counterparts@0.3.6, the version on npm then (release commit
+# 0f5f73d, which the code links below are pinned to). First graded 2026-09-25
+# against 0.3.1. What changed since: 0.3.3 (26 Sep) dated reminders that come
+# back on the day, and feelings that hold a memory higher and slow its fading;
+# 0.3.4 (26 Sep) memories that come back fade more slowly, and dreaming (merge
+# near-copies, link, replay, write a pattern, flag a contradiction); 0.3.5
+# (27 Sep) a reflection after each dream; 0.3.6 (28 Sep) the nightly run,
+# started on its own once a day unless turned off; 0.3.7 (29 Sep) links from
+# the same stretch of a session and quiet pointers (a memory only a link
+# reaches can come up on its own), and headless dreaming. As of 2026-09-29:
+# association and gist are built (3); interference stays partly built until the
+# contradictions work (merged, not yet released) ships, so it shows as `dev`.
+
+slug: counterparts
+name: Counterparts
+tagline: Gives Claude its own memories, which fade and strengthen the way yours do.
+category: self
+maker: Mike LaPeter
+links:
+  website: https://counterparts.ai
+  repos:
+    - mlapeter/counterparts
+  packages:
+    - registry: npm
+      name: counterparts
+openness: open
+
+summary: >-
+  At the end of each session, Claude writes down what it learned, in its own words. Those
+  memories fade unless they come up again, get stronger when they're used, and the ones that
+  keep proving true become part of who it is. Once a day it dreams and then reflects, tidying
+  what it holds. Each new session opens with a short note it wrote itself: who it has been, who
+  you are, where you left off.
+forWho: >-
+  People who use Claude Code and want their AI to have its own sense of self and a relationship
+  with them that builds over time. You don't have to be a developer.
+remembers: >-
+  What the AI learned about you, your work together, and itself, written by the AI as notes, not
+  transcripts.
+doesnt:
+  - "It isn't a work memory: it doesn't track tasks, code conventions or project docs."
+  - It only works with Claude Code, and has only been tested on a Mac.
+  - It's for one person and one AI, not a team.
+standout:
+  - The AI writes and owns the memories, not the app and not the user.
+  - "Forgetting on purpose: memories fade over the days you actually work together."
+  - "A self: memories that hold up across separate days become who it is."
+  - Dreams are kept apart from real memories, and a whole dream can be undone.
+
+facts:
+  lives: Your machine, one file
+  local: true
+  keys: None
+  worksWith:
+    - Claude Code
+  license: MIT
+  price: Free
+  tags:
+    runs:
+      - local
+    needs:
+      - none
+    works:
+      - Claude Code
+
+hood:
+  writes: >-
+    Claude itself, at the end of each session, in its own words, with an importance score.
+  stores: One SQLite database file on your machine. Exportable as readable text.
+  finds: >-
+    Your words are matched by keywords and by meaning (a small model that runs on your machine),
+    then weighed by how strong each memory is.
+  cost: >-
+    No API bill. Writing, and a few minutes of dreaming once a day, use your own Claude Code
+    session; recall and sleep run locally.
+
+mechanisms:
+  salience:
+    status: built
+    depth: 4
+    note: >-
+      Every memory gets an importance score as it's written, mostly Claude's own judgement.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/encode/salience.ts
+
+  emotional:
+    status: built
+    depth: 4
+    note: >-
+      A memory's strongest feeling holds it higher and makes it fade more slowly: a strongly
+      felt one lasts about 1.7 times as long. Only feelings Claude records count; nothing
+      guesses them from the words.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/physics/index.ts
+
+  decay:
+    status: built
+    depth: 4
+    note: >-
+      Unused memories fade over the days you actually use it. Very faint ones are filed away,
+      not deleted.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/sleep/decay.ts
+
+  interference:
+    status: partial
+    depth: 2
+    note: >-
+      A dream spots near-copies and merges them, by Claude's judgement rather than old and new
+      competing. Two memories that disagree are flagged and raised with you, not settled.
+    dev:
+      to: built
+      note: >-
+        Coming: when a newer memory changes an older one, the older one fades rather than
+        competing.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/dream/CONTRACT.md
+
+  retrieval:
+    status: built
+    depth: 4
+    note: >-
+      A memory that's used gets stronger, and each time it comes back on a later day it gets
+      harder to lose, most after a gap of a week or more.
+    source: https://github.com/mlapeter/counterparts/blob/master/CHANGELOG.md#034--2026-09-26
+
+  association:
+    status: built
+    depth: 3
+    note: >-
+      Memories used together get linked, and so do ones from the same stretch of a session;
+      dreams link ones that belong together. Recall spreads along the links, and a memory only a
+      link reaches can come up on its own, as a quiet pointer.
+    source: https://github.com/mlapeter/counterparts/blob/master/CHANGELOG.md#037--2026-09-29
+
+  prospective:
+    status: built
+    depth: 3
+    note: >-
+      A memory can carry a date, and it comes back around that day, unasked. Claude sets the
+      date as it writes; nothing is read out of the text.
+    source: https://github.com/mlapeter/counterparts/blob/master/CHANGELOG.md#033--2026-09-26
+
+  consolidation:
+    status: built
+    depth: 4
+    note: >-
+      After sessions, memories that held up get stronger and the steadiest become core. Once a
+      day a background dream merges near-copies, links and replays, unless you turn it off.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/dream/CONTRACT.md
+
+  reconsolidation:
+    status: built
+    depth: 3
+    note: >-
+      A correction is linked to what it corrects, and the old memory stays readable. Beliefs and
+      core memories go further: a correction is weighed, and the old version is kept.
+    dev:
+      to: built
+      note: >-
+        Coming: a contradiction is sorted as changed, corrected or still open. A change fades
+        the old memory gradually, a correction retires it (still readable by its id), and an
+        open disagreement keeps both side by side; each settle is recorded and can be undone.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/revision.ts
+
+  episodic-semantic:
+    status: built
+    depth: 3
+    note: >-
+      A dream can write down a pattern it sees across memories, labelled “Dreamed”. It starts
+      weak until it proves true.
+    source: https://github.com/mlapeter/counterparts/blob/master/CHANGELOG.md#034--2026-09-26
+
+  schema:
+    status: partial
+    depth: 1
+    note: >-
+      It keeps a card for each person and project it meets. Forming beliefs on those cards isn't
+      wired in yet.
+    dev:
+      to: built
+      note: >-
+        Coming: beliefs about people and projects that change only when the evidence adds up.
+    source: >-
+      https://github.com/mlapeter/counterparts/blob/0f5f73daefaeecf115824506889e073887a88e71/src/core/schemas/index.ts
+
+flow:
+  steps:
+    - label: You talk
+      detail: A normal Claude Code session.
+    - label: Things come to mind
+      detail: Your words cue a few related memories, quietly.
+    - label: It writes
+      detail: At the end, Claude writes what it learned, with an importance score.
+    - label: It sleeps
+      detail: Used memories strengthen, unused ones fade, the steadiest become core.
+    - label: It dreams
+      detail: "Once a day: merges near-copies, links memories, then reflects."
+    - label: It wakes
+      detail: Next session opens with a note it wrote itself.
+  loop:
+    to: 0
+    label: next session
+
+checked: 2026-09-29
+confirmed:
+  by: mlapeter
+  on: 2026-09-29
+sources:
+  - label: counterparts.ai
+    url: https://counterparts.ai
+  - label: GitHub
+    url: https://github.com/mlapeter/counterparts
+  - label: Changelog
+    url: https://github.com/mlapeter/counterparts/blob/master/CHANGELOG.md

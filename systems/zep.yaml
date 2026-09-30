@@ -1,0 +1,245 @@
+# Zep, as counterparts.ai/directory/zep/ shows it.
+
+# Researched 2026-09-29 against Zep's current docs (v3 API) and the Graphiti
+# repo (graphiti-core 0.30). Zep now calls itself a “unified context layer
+# for enterprise data”: “Context Graphs” served from a “Context Lake” on
+# Konig, its own graph database (docs added Sep 2026). By September 2026 it
+# also has Observations (Flex Plus and up) and a Memory MCP Server that lets
+# Claude, ChatGPT and Cursor reach a user's memory. Graphiti 0.29 (Apr 2026)
+# reworked ingestion and added “sagas”. Older write-ups of Zep as a chat
+# memory API, the 2025 paper, and the Community Edition (now unsupported,
+# under `legacy/`) are out of date. `getzep/zep` is now examples and
+# integrations, not the product.
+
+slug: zep
+name: Zep
+tagline: "A memory that keeps facts on a timeline: when each became true, and when it stopped."
+category: blocks
+alsoIn:
+  - user
+  - work
+maker: Zep
+links:
+  website: https://www.getzep.com
+  repos:
+    - getzep/graphiti
+    - getzep/zep
+  packages:
+    - registry: pypi
+      name: graphiti-core
+    - registry: pypi
+      name: zep-cloud
+    - registry: npm
+      name: "@getzep/zep-cloud"
+# Graphiti, the engine, is Apache-2.0; the Zep cloud service is theirs
+openness: partly
+
+summary: >-
+  Zep has an AI read each chat message or record and turn it into a map: people and things,
+  linked by short facts like “Kendra loves Adidas shoes”. Every fact carries dates: when it
+  became true, when it stopped, and when Zep learned each. When Kendra later says she prefers
+  Puma, the old fact is marked as ended, not deleted, so you can ask what's true now or what was
+  true back then. Graphiti is the open-source engine that builds the map; Zep is the managed
+  cloud built on it.
+forWho: >-
+  Developers building agents and apps, from solo builders on Graphiti to enterprises on Zep's
+  cloud with sign-in, access rules and audit logs. Through Zep's Memory MCP Server, people can
+  also reach their memory from Claude, ChatGPT or Cursor.
+remembers: >-
+  People, things and the facts between them, each with dates, plus the original messages and
+  records they came from, a running summary of each person and thing, and (on higher plans)
+  patterns seen across many facts.
+doesnt:
+  - >-
+    Nothing fades with time, and recalling a fact doesn't make it stronger. Ended facts stay on
+    the map for good unless you delete them.
+  - >-
+    Nothing comes back on its own: your app asks for context each turn, and there are no
+    reminders.
+  - >-
+    The pattern-finding Observations and custom domain instructions are on the cloud's Flex Plus
+    plan and up.
+  - It's memory about users, customers and projects, not the AI's own sense of self.
+standout:
+  - >-
+    Facts on a timeline: each one knows when it became true, when it stopped, and when Zep found
+    out, so an agent can answer “what's true now?” and “what was true in March?”.
+  - >-
+    Contradictions end old facts instead of erasing them, with every fact traceable to the
+    message it came from.
+  - >-
+    Graphiti, the open-source engine, is one of the most popular projects in this space, with a
+    choice of graph databases and AI providers and an MCP server.
+
+facts:
+  lives: Zep's cloud (or your own cloud), or your graph database with Graphiti
+  local: true
+  keys: A Zep key (cloud), or an AI model key plus a graph database (Graphiti)
+  worksWith:
+    - Python, TypeScript & Go SDKs
+    - LangGraph
+    - CrewAI
+    - Claude & ChatGPT (MCP)
+    - Cursor
+    - Graphiti MCP server
+  license: Apache-2.0 (Graphiti)
+  price: Graphiti free; Zep free tier, then from $125/mo
+  tags:
+    runs:
+      - server
+      - cloud
+    needs:
+      - model-key
+      - their-key
+    works:
+      - Python
+      - TypeScript
+      - Go
+      - LangGraph
+      - CrewAI
+      - Claude & ChatGPT (MCP)
+      - Cursor
+      - Graphiti MCP
+
+hood:
+  writes: >-
+    A separate AI reads each message or record and pulls out the people, things and facts. The
+    AI you talk to doesn't write them, though it can add memory through MCP tools.
+  stores: >-
+    A graph: people and things joined by dated facts, plus the original messages. Graphiti runs
+    on Neo4j, FalkorDB or Amazon Neptune; Zep's cloud uses its own graph database.
+  finds: >-
+    By meaning, by keywords, and by walking the links around a person or thing, combined into
+    one ranked list. On the cloud, one call builds a ready-to-use context block from the last
+    few messages.
+  cost: >-
+    Yes: several AI calls per message (find things, find facts, date them, match them to the
+    map, update summaries), plus embeddings. Paid in credits on the cloud, or on your own model
+    key.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      An AI decides which people, things and facts are worth pulling out, steered by the types
+      you define and (Flex Plus and up) your domain instructions. There's no importance score.
+    source: https://help.getzep.com/how-graph-creation-works
+
+  emotional:
+    status: none
+    note: >-
+      Feelings can be saved as facts (“Sam feels he lacks motivation”), but they aren't given
+      more weight.
+    source: >-
+      https://github.com/getzep/graphiti/blob/main/graphiti_core/prompts/extract_nodes_and_edges.py
+
+  decay:
+    status: none
+    note: Nothing fades on its own. Facts stay until they're contradicted or you delete them.
+
+  interference:
+    status: built
+    depth: 4
+    note: >-
+      Each new fact is checked against similar old ones: repeats merge, and a contradicted fact
+      is marked as ended. “Newer” means newer in real life, by the fact's dates, not just the
+      last thing said.
+    source: >-
+      https://github.com/getzep/graphiti/blob/main/graphiti_core/utils/maintenance/edge_operations.py
+
+  retrieval:
+    status: none
+    note: >-
+      Being recalled doesn't change a fact. An optional search order ranks things by how often
+      they've been mentioned, which is close but not the same.
+    source: https://help.getzep.com/searching-the-graph
+
+  association:
+    status: built
+    depth: 4
+    note: >-
+      Everything lives on a map of linked people and things. Search can start from one of them
+      and bring up its neighbours first.
+    source: https://help.getzep.com/searching-the-graph
+
+  prospective:
+    status: none
+    note: >-
+      Your app fetches relevant context every turn, but nothing comes back at a set time or on
+      its own.
+    source: https://help.getzep.com/retrieving-context
+
+  consolidation:
+    status: partial
+    depth: 2
+    note: >-
+      Summaries of each person and thing are rewritten as new facts arrive, and Graphiti can
+      regroup related things into “communities” when you ask. Zep doesn't document a background
+      pass that reworks the map between sessions.
+    source: https://help.getzep.com/graphiti/core-concepts/communities
+
+  reconsolidation:
+    status: built
+    depth: 4
+    note: >-
+      A contradicted fact is marked as ended, not deleted. Its dates show what used to be true,
+      and you can search the past.
+    source: https://help.getzep.com/facts
+
+  episodic-semantic:
+    status: built
+    depth: 4
+    only: cloud, Flex Plus and up
+    note: >-
+      Observations turn patterns seen across many facts (habits, commitments, preferences) into
+      lasting memories, and retire them when they're outdated. Open-source Graphiti keeps
+      running summaries instead.
+    source: https://help.getzep.com/observations
+
+  schema:
+    status: partial
+    depth: 2
+    note: >-
+      Each user gets a running summary, and you can define kinds of people and things up front.
+      New facts are checked against old facts, not against the summary.
+    source: https://help.getzep.com/user-summary
+
+flow:
+  steps:
+    - label: Messages and records
+      detail: Your app sends chats, documents or business data.
+    - label: Pull out facts
+      detail: An AI finds the people, things and facts, and dates them.
+    - label: Check the map
+      detail: "Match them to what's known: merge repeats, end contradicted facts."
+    - label: Update summaries
+      detail: Each person and thing's summary is refreshed.
+    - label: Hand them back
+      detail: Next turn, the relevant facts, with their dates, go to the AI.
+  loop:
+    to: 0
+    label: next message
+
+checked: 2026-09-29
+sources:
+  - label: Graphiti on GitHub
+    url: https://github.com/getzep/graphiti
+  - label: Facts and their dates
+    url: https://help.getzep.com/facts
+  - label: How the graph is built
+    url: https://help.getzep.com/how-graph-creation-works
+  - label: Observations
+    url: https://help.getzep.com/observations
+  - label: Custom instructions
+    url: https://help.getzep.com/custom-instructions
+  - label: Entity summaries
+    url: https://help.getzep.com/entities
+  - label: Memory MCP Server
+    url: https://help.getzep.com/memory-mcp-server
+  - label: Graphiti 0.29 release notes
+    url: https://github.com/getzep/graphiti/releases/tag/v0.29.0
+  - label: Changelog
+    url: https://help.getzep.com/changelog
+  - label: Pricing
+    url: https://www.getzep.com/pricing

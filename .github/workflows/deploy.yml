@@ -1,0 +1,23 @@
+name: Rebuild counterparts.ai
+
+# A merged change goes live: ask the site to rebuild from this repo.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "systems/**"
+      - "mechanisms.yaml"
+
+permissions: {}
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask the site to rebuild
+        env:
+          HOOK: ${{ secrets.SITE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "No deploy hook is set; nothing to do."; exit 0; fi
+          curl -fsS -X POST "$HOOK" > /dev/null
+          echo "Rebuild requested."

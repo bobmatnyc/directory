@@ -1,0 +1,229 @@
+# Supermemory, as counterparts.ai/directory/supermemory/ shows it.
+
+# Researched 2026-09-29 against Supermemory's current docs, repo and pricing.
+# It changed a lot in 2026: a self-hosted server (one prebuilt binary) arrived
+# in June (server-v0.0.1, 10 Jun 2026); the docs were restructured in July
+# around a memory graph that “dreams” in the background; and on 7 Sep 2026
+# the consumer app (app.supermemory.ai) became a redirect to the developer
+# console and the browser extension was dropped. So older write-ups that
+# describe it as a personal bookmarking app are out of date. People now meet
+# it as an API, or through its plugins and MCP server.
+
+slug: supermemory
+name: Supermemory
+tagline: A memory service that turns chats and files into a web of facts that stays current.
+category: blocks
+alsoIn:
+  - user
+  - work
+maker: Supermemory
+links:
+  website: https://supermemory.ai
+  repos:
+    - supermemoryai/supermemory
+    - supermemoryai/claude-supermemory
+  packages:
+    - registry: npm
+      name: supermemory
+    - registry: pypi
+      name: supermemory
+# the SDKs, plugins and MCP server are open; the memory engine itself ships
+# as a free prebuilt binary, and its source isn't in the public repo
+openness: partly
+
+summary: >-
+  You send Supermemory chats, notes, PDFs or whole Google Drives. It keeps the originals for
+  searching, and a “dreaming” step reads them and writes short facts, like “Alex works at
+  Stripe”. Each new fact is linked to what it already knows: it can replace an old fact, add
+  detail to one, or lead to a new guess. It also keeps a short profile of each person, so the AI
+  always knows the basics.
+forWho: >-
+  Mainly developers adding memory and document search to their apps and agents. People also use
+  it directly through its plugins for Claude Code, Cursor, Codex and others, and its MCP server.
+remembers: >-
+  Short facts about people, projects and organisations, a profile of each (lasting facts and
+  what's going on now), and the original documents.
+doesnt:
+  - >-
+    The memory engine's source code isn't public. You can run the server free on your machine,
+    but not read or change how it works.
+  - >-
+    Connectors (Drive, Gmail, Notion) and the MCP server are on the cloud only, not the
+    self-hosted server.
+  - >-
+    The docs don't say that using a memory makes it stronger, or that feelings add weight.
+  - No reminders that come back on their own.
+  - It's memory about users and projects, not the AI's own sense of self.
+standout:
+  - >-
+    Memory as a graph that stays current: new facts replace, extend or build on old ones, and
+    the old version is kept.
+  - >-
+    Its guesses are marked as guesses. Facts it inferred rank lower until you approve them, and
+    there's a review queue for that.
+  - >-
+    One-command self-hosting that can run fully offline with a local model, on the same API as
+    the cloud.
+  - >-
+    A strong benchmark focus: self-reported #1 on LongMemEval, LoCoMo and ConvoMem, plus
+    MemoryBench, an open tool to compare memory systems.
+
+facts:
+  lives: Supermemory's cloud, or your own machine
+  local: true
+  keys: >-
+    A Supermemory key (cloud), or your own AI model key (self-hosted; none with a local model)
+  worksWith:
+    - TypeScript & Python SDKs
+    - Claude Code
+    - Cursor
+    - Codex
+    - MCP clients
+    - Vercel AI SDK
+  license: MIT (repo), Apache-2.0 (SDKs)
+  price: Free tier; Pro $19/mo
+  tags:
+    runs:
+      - local
+      - cloud
+    needs:
+      - model-key
+      - their-key
+    works:
+      - TypeScript
+      - Python
+      - Claude Code
+      - Cursor
+      - Codex
+      - MCP
+      - Vercel AI SDK
+
+hood:
+  writes: >-
+    Supermemory's own model reads what you send and writes the facts, in a background “dreaming”
+    pass. You can steer it with instructions, or write facts yourself. In the plugins, the AI
+    can also save and forget on purpose.
+  stores: >-
+    Its own engine that mixes meaning search, keyword search and a graph of linked facts.
+    Self-hosted, it all sits in one folder.
+  finds: >-
+    By meaning across both facts and original documents, with optional reranking and linked
+    facts. The profile comes along without a search.
+  cost: >-
+    Yes: its models read everything you add, billed as credits on the cloud. Self-hosted, those
+    calls run on your model.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      Its model decides what's worth keeping: small talk is less likely to become a lasting
+      memory. There's no visible importance score.
+    source: https://supermemory.ai/docs/concepts/graph-memory
+
+  emotional:
+    status: unknown
+    note: The engine is closed and the docs don't mention emotional weighting either way.
+
+  decay:
+    status: partial
+    depth: 2
+    note: >-
+      One-off moments fade unless they matter, and dated facts (“exam tomorrow”) expire. The
+      docs don't say that unused memories fade.
+    source: https://supermemory.ai/docs/concepts/graph-memory
+
+  interference:
+    status: built
+    depth: 3
+    note: When a new fact contradicts an old one (a new job, say), the new one wins in search.
+    source: https://supermemory.ai/docs/concepts/graph-memory
+
+  retrieval:
+    status: unknown
+    note: >-
+      Preferences said again get stronger, but the docs don't say that recalling a memory
+      strengthens it.
+
+  association:
+    status: built
+    depth: 3
+    note: >-
+      Facts are linked as they arrive, and a search can bring back each result's linked facts
+      too.
+    source: https://supermemory.ai/docs/concepts/graph-memory
+
+  prospective:
+    status: none
+    note: >-
+      Dated facts expire rather than come back, and the profile is always there rather than
+      timed. No reminders are documented.
+    source: https://supermemory.ai/docs/concepts/graph-memory
+
+  consolidation:
+    status: built
+    depth: 3
+    note: >-
+      “Dreaming” works in the background, grouping related conversations and merging, linking
+      and organising what they say.
+    source: https://supermemory.ai/docs/concepts/how-it-works
+
+  reconsolidation:
+    status: built
+    depth: 3
+    note: >-
+      A replaced fact is kept as history, and editing a memory saves a new version beside the
+      old one.
+    source: https://supermemory.ai/docs/recall/memory-operations
+
+  episodic-semantic:
+    status: built
+    depth: 4
+    note: >-
+      It draws new facts from patterns across many memories. They're marked as guesses and rank
+      lower until approved.
+    source: https://supermemory.ai/docs/recall/memory-review
+
+  schema:
+    status: partial
+    depth: 2
+    note: >-
+      Each person or project gets a profile of lasting facts and current context, but new facts
+      aren't documented as weighed against it.
+    source: https://supermemory.ai/docs/concepts/user-profiles
+
+flow:
+  steps:
+    - label: You send content
+      detail: Chats, files or synced apps, filed under a user or project.
+    - label: Index it
+      detail: The originals are split up and made searchable.
+    - label: Dream
+      detail: "Its model writes facts and links them: replaces, extends, or infers."
+    - label: Keep a profile
+      detail: Lasting facts and what's going on now, for each person or project.
+    - label: Hand it back
+      detail: The profile, plus the facts and passages that match the question.
+  loop:
+    to: 0
+    label: next conversation
+
+checked: 2026-09-29
+sources:
+  - label: Supermemory on GitHub
+    url: https://github.com/supermemoryai/supermemory
+  - label: Graph memory
+    url: https://supermemory.ai/docs/concepts/graph-memory
+  - label: How it works (dreaming)
+    url: https://supermemory.ai/docs/concepts/how-it-works
+  - label: Reviewing inferred memories
+    url: https://supermemory.ai/docs/recall/memory-review
+  - label: Self-hosting
+    url: https://supermemory.ai/docs/self-hosting/overview
+  - label: Claude Code plugin
+    url: https://supermemory.ai/docs/integrations/claude-code
+  - label: The app moved to the console
+    url: https://github.com/supermemoryai/supermemory/blob/main/apps/web/README.md
+  - label: Billing and plans
+    url: https://supermemory.ai/docs/overview/billing

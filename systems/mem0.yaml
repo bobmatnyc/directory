@@ -1,0 +1,217 @@
+# Mem0, as counterparts.ai/directory/mem0/ shows it.
+
+# Researched 2026-09-25 against Mem0's current docs (v3). Mem0 changed a lot
+# in 2026: since 14 Apr 2026 writes are ADD-only and the graph store became
+# built-in entity linking, so older write-ups (and the 2025 paper's
+# ADD/UPDATE/DELETE/NOOP step) are out of date. Several mechanisms exist only
+# on the paid cloud Platform, not in the open-source library.
+
+slug: mem0
+name: Mem0
+tagline: >-
+  A plug-in memory layer that pulls facts out of AI chats and hands back the relevant ones later.
+category: blocks
+alsoIn:
+  - user
+  - work
+maker: Mem0
+links:
+  website: https://mem0.ai
+  repos:
+    - mem0ai/mem0
+  packages:
+    - registry: pypi
+      name: mem0ai
+    - registry: npm
+      name: mem0ai
+# the library is Apache-2.0; decay, Dream and the rest are cloud-only
+openness: partly
+
+summary: >-
+  When you chat with an AI, Mem0 has another AI read the conversation and jot down short facts,
+  like “prefers TypeScript” or “moved to SF”. It files them by who they belong to, notes the
+  names they mention, and later finds the right ones by meaning, keywords and those names. On
+  its cloud, a background “Dream” pass merges duplicates, marks outdated facts as replaced, and
+  writes up patterns.
+forWho: >-
+  Mainly developers adding memory to their own apps, from solo builders to enterprise. People
+  also meet it through its plugins for Claude Code, Cursor and other editors, and a Chrome
+  extension.
+remembers: >-
+  Short facts about users, agents and sessions (preferences, details, project facts), plus the
+  names they mention.
+doesnt:
+  - >-
+    Its richer mechanisms (fading, strengthening, Dream) are on the paid cloud. Self-hosted,
+    contradictory facts pile up side by side.
+  - >-
+    Its Claude Code plugin sends your session text to Mem0's cloud (with secrets removed), so it
+    isn't local-only.
+  - No reminders that come back on their own, and no emotional weighting.
+  - It's memory about users and projects, not the AI's own sense of self.
+standout:
+  - >-
+    A drop-in memory for almost any stack: about 20 AI model providers, 25 databases, and
+    plugins for many agents and editors.
+  - >-
+    Dream: a sleep-like background pass that merges, supersedes and finds patterns, with every
+    change reviewable.
+  - >-
+    A strong benchmark focus, with high self-reported scores on long-conversation memory tests.
+
+facts:
+  lives: Mem0's cloud, or your own server
+  local: true
+  keys: A Mem0 key (cloud) or an AI model key (self-hosted)
+  worksWith:
+    - Python & TypeScript SDKs
+    - Claude Code
+    - Cursor
+    - Codex
+    - LangGraph
+    - CrewAI
+  license: Apache-2.0
+  price: Free tier; from $19/mo
+  tags:
+    runs:
+      - server
+      - cloud
+    needs:
+      - model-key
+      - their-key
+    works:
+      - Python
+      - TypeScript
+      - Claude Code
+      - Cursor
+      - Codex
+      - LangGraph
+      - CrewAI
+
+hood:
+  writes: >-
+    A separate AI call reads each conversation and pulls out short facts. The AI you talk to
+    doesn't write them.
+  stores: >-
+    A vector database (about 25 to choose from; Postgres with pgvector self-hosted), plus the
+    names each fact mentions.
+  finds: By meaning, by keywords, and by shared names, combined into one ranked list.
+  cost: >-
+    Yes: an AI call to pull out facts on every add, plus embeddings. Dream adds more on the
+    cloud.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      An AI decides what counts as a fact, and you can say what to include or skip. There's no
+      importance score.
+    source: https://docs.mem0.ai/platform/features/custom-instructions
+
+  emotional:
+    status: none
+    note: No emotional weighting in the current version.
+
+  decay:
+    status: built
+    depth: 3
+    only: cloud, opt-in
+    note: >-
+      Once it's switched on for a project, unused memories slowly sink in search results, though
+      nothing is deleted. You can also set expiry dates.
+    source: https://mem0.ai/blog/introducing-memory-decay-in-mem0
+
+  interference:
+    status: built
+    depth: 3
+    only: cloud only
+    note: >-
+      Dream marks an older fact as replaced when a newer one contradicts it. Self-hosted, both
+      are kept.
+    source: https://docs.mem0.ai/platform/features/dream
+
+  retrieval:
+    status: built
+    depth: 3
+    only: cloud, opt-in
+    note: >-
+      Each time a memory comes up in a search, it gets a small boost, once decay is switched on
+      for the project.
+    source: https://github.com/mem0ai/mem0/blob/main/docs/platform/features/memory-decay.mdx
+
+  association:
+    status: built
+    depth: 3
+    note: >-
+      Memories that mention the same person or thing are linked, and naming it in a question
+      brings them up.
+    source: https://docs.mem0.ai/platform/features/graph-memory
+
+  prospective:
+    status: none
+    note: It understands “upcoming” when you ask, but nothing comes back on its own.
+    source: https://docs.mem0.ai/changelog/highlights
+
+  consolidation:
+    status: built
+    depth: 3
+    only: cloud only
+    note: >-
+      Dream merges duplicates in the background, and a weekly pass (Pro plan) sums things up.
+    source: https://docs.mem0.ai/platform/features/dream
+
+  reconsolidation:
+    status: built
+    depth: 3
+    only: cloud only
+    note: A replaced memory stays visible and is linked to what replaced it.
+    source: https://docs.mem0.ai/platform/features/dream
+
+  episodic-semantic:
+    status: built
+    depth: 3
+    only: cloud Pro
+    note: >-
+      Dream writes “pattern memories” from things that keep coming up, kept alongside the
+      originals.
+    source: https://docs.mem0.ai/platform/features/dream
+
+  schema:
+    status: partial
+    depth: 2
+    note: >-
+      User profiles (beta) keep a summary of each person, but new facts aren't weighed against
+      it.
+    source: https://github.com/mem0ai/mem0/blob/main/docs/platform/features/user-profiles.mdx
+
+flow:
+  steps:
+    - label: A conversation
+      detail: Your app or plugin sends Mem0 the chat.
+    - label: Pull out facts
+      detail: An AI reads it and writes each fact as a new, short memory.
+    - label: File them
+      detail: Stored by meaning, with the names they mention linked.
+    - label: Dream
+      detail: "On the cloud: merge repeats, mark old facts replaced, find patterns."
+    - label: Hand them back
+      detail: Next time, the relevant facts are found and given to the AI.
+  loop:
+    to: 0
+    label: next conversation
+
+checked: 2026-09-25
+sources:
+  - label: Mem0 on GitHub
+    url: https://github.com/mem0ai/mem0
+  - label: What changed in v3
+    url: https://docs.mem0.ai/changelog/highlights
+  - label: Dream
+    url: https://docs.mem0.ai/platform/features/dream
+  - label: Memory decay
+    url: https://mem0.ai/blog/introducing-memory-decay-in-mem0
+  - label: Claude Code plugin
+    url: https://github.com/mem0ai/mem0/tree/main/integrations/claude-code-plugin
+  - label: Pricing
+    url: https://mem0.ai/pricing

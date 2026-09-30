@@ -1,0 +1,198 @@
+# Letta, as counterparts.ai/directory/letta/ shows it.
+
+# Researched 2026-09-25 against Letta's current docs. Letta moved on from the
+# MemGPT-era core/archival/recall design (now on an `archive` branch) to Letta
+# Code's git-backed memory files ("MemFS") and background "dreaming" agents.
+
+slug: letta
+name: Letta
+tagline: An AI agent that keeps its own memory as files, and tidies them up while idle.
+category: self
+alsoIn:
+  - work
+  - blocks
+maker: Letta, Inc. (the MemGPT team, from UC Berkeley)
+links:
+  website: https://www.letta.com
+  repos:
+    - letta-ai/letta-code
+    - letta-ai/letta
+  packages:
+    - registry: npm
+      name: "@letta-ai/letta-code"
+    - registry: pypi
+      name: letta-client
+# the code is Apache-2.0; the hosted Letta Cloud is theirs
+openness: open
+
+summary: >-
+  Letta gives an AI agent a notebook it owns. The most important pages (who it is, who you are,
+  project rules) are always open in front of it; the rest stay on the shelf, but it can see
+  every page title, so it knows where to look. The agent edits the pages itself and every edit
+  is saved with its history. Between conversations, background helpers “dream”: they reread
+  recent sessions and fold what they learned into the notebook.
+forWho: >-
+  Developers and power users who want a long-lived agent with a memory and personality of its
+  own. There's a coding CLI, a desktop app and a developer SDK, with plans from free up to
+  enterprise.
+remembers: >-
+  Anything the agent decides to write down: its persona, who you are, your preferences, project
+  rules and lessons, kept as readable files.
+doesnt:
+  - >-
+    Nothing fades on its own and nothing gets stronger with use. What survives depends on what
+    the AI chooses to edit.
+  - >-
+    It's a whole agent, not a memory you add to the one you already use. Its Claude Code plugin
+    is labelled a demo, not for production.
+  - >-
+    Background dreaming can change memory without you reviewing it first (review is optional).
+standout:
+  - >-
+    Self-editing memory: MemGPT pioneered an AI managing its own memory, the way a computer's
+    operating system manages RAM.
+  - >-
+    Sleep-time compute: tidying memory happens in the background, not while you wait for a reply.
+  - >-
+    Memory as git-versioned files: readable, with full history, and portable across models and
+    machines.
+
+facts:
+  lives: Letta's cloud, or your machine
+  local: true
+  keys: An AI model key, or Letta's cloud
+  worksWith:
+    - Its own CLI and app
+    - TypeScript SDK
+    - MCP tools
+    - Claude Code (demo plugin)
+  license: Apache-2.0
+  price: Free tier; Pro $20/mo
+  tags:
+    runs:
+      - local
+      - cloud
+    needs:
+      - model-key
+      - their-key
+    works:
+      - Own CLI & app
+      - TypeScript
+      - MCP
+      - Claude Code (demo)
+
+hood:
+  writes: The agent itself, as it works, plus background “dreaming” helpers between sessions.
+  stores: Markdown files in a git repo, on your machine or Letta's cloud.
+  finds: >-
+    The most important files are always in view; the agent opens others by name, and a helper
+    searches past conversations. Meaning-based search is an add-on.
+  cost: >-
+    Yes: dreaming and the helpers are extra AI calls, on your model key or Letta's credits.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      The AI decides what's worth writing down and where it goes, but there's no importance
+      score.
+    source: https://docs.letta.com/configuration/memory/index.md
+
+  emotional:
+    status: none
+    note: No emotional weighting is documented.
+    source: https://docs.letta.com/concepts/memfs/index.md
+
+  decay:
+    status: none
+    note: Nothing fades on its own. A memory goes away only if the AI edits it out.
+    source: https://docs.letta.com/configuration/memory/index.md
+
+  interference:
+    status: partial
+    depth: 1
+    note: >-
+      A memory helper cleans out repeats, by the AI's judgement rather than old and new
+      competing.
+    source: https://docs.letta.com/configuration/subagents/index.md
+
+  retrieval:
+    status: none
+    note: Using a memory doesn't make it stronger.
+    source: https://docs.letta.com/concepts/memfs/index.md
+
+  association:
+    status: partial
+    depth: 1
+    note: >-
+      The always-visible list of pages works as signposts to related ones. There are no
+      automatic links.
+    source: https://docs.letta.com/concepts/memfs/index.md
+
+  prospective:
+    status: partial
+    depth: 1
+    note: >-
+      It can schedule prompts to run later, once or on repeat, and the agent can schedule them
+      itself. That runs a task at a time; a memory doesn't come back on its own.
+    source: https://docs.letta.com/configuration/schedules/index.md
+
+  consolidation:
+    status: built
+    depth: 3
+    note: >-
+      Dreaming helpers reread recent conversations in the background and fold the lessons into
+      memory.
+    source: https://docs.letta.com/guides/agents/architectures/sleeptime/
+
+  reconsolidation:
+    status: partial
+    depth: 2
+    note: >-
+      The AI rewrites memory freely, and every edit is saved in git, so old versions are always
+      kept.
+    source: https://docs.letta.com/concepts/memfs/index.md
+
+  episodic-semantic:
+    status: partial
+    depth: 2
+    note: >-
+      Dreaming boils conversations down into lessons, done by the AI rather than a separate
+      mechanism.
+    source: https://docs.letta.com/configuration/memory/index.md
+
+  schema:
+    status: partial
+    depth: 2
+    note: >-
+      Always-open pages about its persona, you and the project shape how it reads new things,
+      but only implicitly.
+    source: https://docs.letta.com/concepts/memfs/index.md
+
+flow:
+  steps:
+    - label: You talk
+      detail: The agent reads its always-open pages every turn.
+    - label: It looks things up
+      detail: It opens other pages or searches past chats when it needs to.
+    - label: It edits its notes
+      detail: It rewrites its own memory files; each edit is saved in git.
+    - label: It dreams
+      detail: Background helpers reread recent sessions and fold in the lessons.
+  loop:
+    to: 0
+    label: next turn
+
+checked: 2026-09-25
+sources:
+  - label: Letta Code on GitHub
+    url: https://github.com/letta-ai/letta-code
+  - label: Memory files (MemFS)
+    url: https://docs.letta.com/concepts/memfs/index.md
+  - label: Sleep-time agents
+    url: https://docs.letta.com/guides/agents/architectures/sleeptime/
+  - label: Pricing
+    url: https://docs.letta.com/letta-code/pricing
+  - label: MemGPT paper
+    url: https://arxiv.org/abs/2310.08560

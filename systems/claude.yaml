@@ -1,0 +1,220 @@
+# Claude (app memory), as counterparts.ai/directory/claude/ shows it.
+
+# Researched 2026-09-29 against Anthropic's help center, release notes and
+# pricing page. Claude's app memory changed a lot in 2026. It began in 2025 as
+# a summary Claude rewrote every 24 hours (Team 11 Sep, Enterprise 18 Sep,
+# Pro and Max 23 Oct 2025), and reached free users on 2 Mar 2026. On 10 Jul
+# 2026 that daily summary was replaced by individual topics Claude saves and
+# updates as you chat; on 25 Aug 2026 the topics became editable in settings,
+# gained a sensitive-topics switch, and started being shared with Cowork in
+# the cloud. Chat and Cowork are now merging into one Claude (rolling out to
+# Pro and Max). Older write-ups describing a 24-hour summary are out of date.
+# This is Claude's memory in the Claude apps, not Claude Code's, which has its
+# own. Closed product: where the docs are silent, the grade is "unknown".
+
+slug: claude
+name: Claude (app memory)
+tagline: >-
+  Claude remembers your work, your people and your preferences from chat to chat, and lets you
+  see and edit every topic.
+category: user
+alsoIn:
+  - work
+maker: Anthropic
+links:
+  website: https://claude.com
+openness: closed
+
+summary: >-
+  As you chat, Claude jots down short topics about you: your role, your projects, the people you
+  work with, how you like answers written. The next conversation starts already knowing them.
+  Each project keeps its own separate memory and summary. You can read, edit or delete any topic
+  in settings, or just tell Claude to remember or forget something. On paid plans, Claude can
+  also search your past chats when you ask.
+forWho: >-
+  Anyone using Claude on the web, desktop or phone, from free users to companies. It's on by
+  default for Free, Pro and Max; on Team and Enterprise an owner switches it on.
+remembers: >-
+  Your role, projects and ongoing work, the people and places in your work and life, how you
+  like to communicate, and your technical preferences. Health, beliefs and similar topics only
+  if you opt in.
+doesnt:
+  - >-
+    Nothing documented fades with time or gets stronger with use. A topic stays until you or
+    Claude change or delete it.
+  - >-
+    Searching past chats is for paid plans only, and Cowork tasks that run on your own computer
+    keep their memory to themselves.
+  - >-
+    It's memory about you and your work, held by Anthropic, not the AI's own sense of self. How
+    topics are chosen, ranked and merged isn't published.
+  - It's the Claude apps only. Claude Code has its own, separate memory.
+standout:
+  - >-
+    Everything it remembers is shown as plain topics you can read, edit or delete, and fixing
+    one fixes it for every chat after.
+  - >-
+    Project memory keeps each project's context in its own space, so client work doesn't leak
+    into your personal chats.
+  - >-
+    Careful defaults: incognito chats for any plan, sensitive topics off unless you opt in, and
+    some things (like ID numbers) never saved at all.
+  - >-
+    Easy to move in: a ready-made prompt pulls your memory out of another assistant and Claude
+    files it as topics.
+
+facts:
+  lives: Anthropic's cloud
+  local: false
+  keys: None, just a Claude account
+  worksWith:
+    - claude.ai on the web
+    - Claude Desktop
+    - Claude Mobile
+    - Cowork in the cloud
+  license: Proprietary
+  price: Free; Pro $17/mo yearly or $20 monthly
+  tags:
+    runs:
+      - cloud
+    needs:
+      - account
+    works:
+      - Web
+      - Desktop
+      - Mobile
+      - Cowork
+
+hood:
+  writes: >-
+    Claude itself, during the conversation, choosing what to save. You can also say “remember
+    this”, or edit topics in settings.
+  stores: >-
+    A set of topics on Anthropic's servers, encrypted at rest, with a separate space for each
+    project.
+  finds: >-
+    Saved topics are brought into new conversations. On paid plans Claude can also search past
+    chats when you ask, and shows links to them.
+  cost: Not disclosed. It's part of the plan, with no separate charge.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 2
+    note: >-
+      Claude decides what's worth saving as you chat, skips sensitive topics unless you opt in,
+      and saves on request. There's no documented importance score.
+    source: >-
+      https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context
+
+  emotional:
+    status: unknown
+    note: >-
+      Not documented. The sensitive-topics setting is a privacy filter, not extra weight for
+      feelings.
+
+  decay:
+    status: unknown
+    note: >-
+      Fading isn't documented. Topics even outlive the chat they came from: deleting a chat
+      doesn't remove them.
+
+  interference:
+    status: partial
+    depth: 1
+    note: >-
+      Claude updates a topic when things change (“mention that a deadline moved, and your next
+      conversation already knows”), by its own judgement in the chat.
+    source: >-
+      https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context
+
+  retrieval:
+    status: unknown
+    note: Whether using a memory makes it stronger isn't documented.
+
+  association:
+    status: unknown
+    note: >-
+      Topics are sorted into categories and projects, but links between memories aren't
+      documented.
+
+  prospective:
+    status: partial
+    depth: 1
+    only: paid plans
+    note: >-
+      Claude can set up tasks that run on a schedule, but saved topics don't come back at a set
+      moment; they're simply there in each new chat.
+    source: >-
+      https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork
+
+  consolidation:
+    status: unknown
+    note: >-
+      It now saves topics as you chat “rather than summarizing conversations after they end”
+      (the old daily summary was retired in July 2026). Any tidying between sessions isn't
+      documented.
+
+  reconsolidation:
+    status: partial
+    depth: 1
+    note: >-
+      You or Claude can correct a topic and the fix applies from then on, but keeping what it
+      used to say isn't documented.
+    source: >-
+      https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context
+
+  episodic-semantic:
+    status: partial
+    depth: 1
+    note: >-
+      Topics are general facts drawn from many chats, like your role or working style, but as a
+      side effect of saving. A monthly recap (beta) sums up your themes, but isn't kept as
+      memory.
+    source: >-
+      https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context
+
+  schema:
+    status: partial
+    depth: 2
+    note: >-
+      It keeps topics on the people in your life and a summary for each project, but weighing
+      new facts against them isn't documented.
+    source: >-
+      https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context
+
+flow:
+  steps:
+    - label: You chat
+      detail: Claude starts each conversation knowing your saved topics.
+    - label: It saves topics
+      detail: As you talk, it adds or updates short topics, or saves what you ask it to.
+    - label: Kept by project
+      detail: Each project has its own memory; other chats share one.
+    - label: You review
+      detail: Read, edit or delete any topic in Settings > Memory.
+  loop:
+    to: 0
+    label: next conversation
+
+checked: 2026-09-29
+sources:
+  - label: Chat search and memory
+    url: >-
+      https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context
+  - label: Release notes
+    url: https://support.claude.com/en/articles/12138966-release-notes
+  - label: Import and export your memory
+    url: >-
+      https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude
+  - label: Incognito chats
+    url: https://support.claude.com/en/articles/12260368-use-incognito-chats
+  - label: Scheduled tasks
+    url: >-
+      https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork
+  - label: Monthly recap
+    url: https://support.claude.com/en/articles/15672559-see-your-monthly-recap
+  - label: Bringing memory to Claude (2025)
+    url: https://claude.com/blog/memory
+  - label: Pricing
+    url: https://claude.com/pricing

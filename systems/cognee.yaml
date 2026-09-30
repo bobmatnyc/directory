@@ -1,0 +1,248 @@
+# Cognee, as counterparts.ai/directory/cognee/ shows it.
+
+# Researched 2026-09-29 against Cognee v1.6.1 (24 Sep 2026), its docs and its
+# code. Cognee changed a lot in 2026: v1.0.0 (11 Apr 2026) replaced
+# add/cognify/search/memify (now “legacy operations”) with remember, recall,
+# improve and forget, and improve() grew into a nine-stage loop (ratings,
+# session lessons, preferences). v1.6.0 (18 Sep 2026) made it work with no AI
+# key at all, on small local models. So pre-April write-ups and the 2025 paper
+# describe an older shape. The hosted Cloud runs the same memory code; only
+# its usage dashboards are cloud-only.
+
+slug: cognee
+name: Cognee
+tagline: >-
+  An open-source memory that turns documents, code and chats into a knowledge graph your agents
+  can search.
+category: blocks
+alsoIn:
+  - work
+maker: Topoteretes (Cognee), Berlin
+links:
+  website: https://www.cognee.ai
+  repos:
+    - topoteretes/cognee
+    - topoteretes/cognee-integrations
+  packages:
+    - registry: pypi
+      name: cognee
+    - registry: npm
+      name: "@cognee/cognee-ts"
+# the library is Apache-2.0; a production Postgres graph store and a more
+# accurate local extractor are licensed separately, and the Cloud is theirs
+openness: open
+
+summary: >-
+  You give Cognee text, files, code or a conversation. It picks out the people, places and
+  things, and how they connect, and keeps them as a map (a knowledge graph) alongside the
+  original passages. When an agent asks a question, Cognee finds the matching passages and walks
+  the map to their neighbours. After a session, an “improve” step folds the chat into the map,
+  applies any ratings you gave answers, and boils what was learned into lasting lessons.
+forWho: >-
+  Developers building agents or a shared “company brain” from documents, tickets, code and
+  conversations. People also meet it through its plugins for Claude Code, Codex and OpenClaw,
+  and its MCP server for Cursor and others.
+remembers: >-
+  Facts from your documents and code (entities, relationships, summaries), conversation turns
+  and agent tool steps, lessons distilled from sessions, and, if you turn it on, each user's
+  preferences.
+doesnt:
+  - Nothing fades on its own by default. Memories stay until you forget them.
+  - >-
+    Contradictions are flagged rather than settled: both facts stay current unless you declare a
+    relationship single-valued or close the old fact yourself.
+  - >-
+    Ratings and personal preferences only change ranking once you rate answers and switch those
+    signals on.
+  - >-
+    No reminders, no emotional weighting, and no sense of self: it's knowledge memory for agents
+    and teams.
+standout:
+  - >-
+    Runs entirely on your machine with no AI key: small local models build the graph, and an AI
+    key only adds written answers.
+  - >-
+    A real knowledge graph you can open and explore, so you can see why something was recalled,
+    not just that it was.
+  - >-
+    A self-improvement loop you can audit: each improve() run reports what every one of its nine
+    stages did, and why any were skipped.
+  - >-
+    Honest about conflicts: it can flag two facts that disagree instead of quietly overwriting
+    one, and it can import memory from Mem0, Letta or Zep.
+
+facts:
+  lives: Your machine, your server, or Cognee Cloud
+  local: true
+  keys: None to store and search; an AI model key for written answers and lessons
+  worksWith:
+    - Python SDK
+    - Claude Code
+    - Codex
+    - Cursor (MCP)
+    - OpenClaw
+    - REST API
+  license: Apache-2.0
+  price: Free to self-host; Cloud free tier, then $1 per 1M tokens
+  tags:
+    runs:
+      - local
+      - server
+      - cloud
+    needs:
+      - model-key
+    works:
+      - Python
+      - Claude Code
+      - Codex
+      - Cursor
+      - OpenClaw
+      - REST API
+
+hood:
+  writes: >-
+    Whatever you or your app sends it. An AI (or a small local model) extracts the entities and
+    links; after sessions, an AI curator writes the lessons.
+  stores: >-
+    A graph database, a vector database and SQLite, all embedded by default (Ladybug, LanceDB),
+    or Postgres, Neo4j and others on a server.
+  finds: >-
+    By meaning and keywords over passages, then by walking the graph to connected facts. It
+    picks the search type for you unless you choose.
+  cost: >-
+    Yes, with an AI key: extraction on every add, a call per written answer, and more in
+    improve() and the optional contradiction check.
+
+mechanisms:
+  salience:
+    status: partial
+    depth: 1
+    note: >-
+      You can mark something as more or less important when you save it; otherwise everything
+      gets the same middle weight.
+    source: https://docs.cognee.ai/guides/importance-weight
+
+  emotional:
+    status: none
+    note: No emotional weighting is documented.
+
+  decay:
+    status: partial
+    depth: 1
+    note: >-
+      Nothing fades unless you turn it on: an opt-in cleanup can delete documents nobody has
+      searched for in a set time, and personal preference weights drift back to neutral.
+    source: >-
+      https://github.com/topoteretes/cognee/blob/main/cognee/tasks/cleanup/cleanup_unused_data.py
+
+  interference:
+    status: partial
+    depth: 1
+    note: >-
+      An opt-in check flags new facts that contradict stored ones. Only for relationships you
+      declare single-valued does the newest get marked current and the older one tagged as
+      replaced.
+    source: https://docs.cognee.ai/changelog
+
+  retrieval:
+    status: partial
+    depth: 1
+    note: >-
+      Rating an answer strengthens or weakens the memories it used, but merely using a memory
+      doesn't, and the weight is off in ranking by default.
+    source: https://docs.cognee.ai/guides/feedback-system
+
+  association:
+    status: built
+    depth: 4
+    note: >-
+      Everything lives in a graph, and search pulls in the facts directly connected to what it
+      found. An optional pass links related things that weren't connected.
+    source: https://docs.cognee.ai/core-concepts/main-operations/legacy-operations/search
+
+  prospective:
+    status: none
+    note: >-
+      It answers time-based questions when asked, but nothing comes back on its own at a set
+      time.
+    source: https://docs.cognee.ai/guides/time-awareness
+
+  consolidation:
+    status: built
+    depth: 4
+    note: >-
+      After a session, improve() runs in the background by default: it folds the chat into the
+      graph, applies ratings and distills lessons. Merging duplicate entities is a separate
+      opt-in pass.
+    source: https://docs.cognee.ai/core-concepts/main-operations/improve
+
+  reconsolidation:
+    status: partial
+    depth: 2
+    note: >-
+      Outdated facts are kept rather than overwritten, closed with an end date or tagged as
+      replaced, but only when your code closes them or you declared the relationship.
+    source: https://docs.cognee.ai/guides/fact-validity
+    dev:
+      to: partial
+      note: >-
+        Planned: search will take closed facts into account, so an outdated fact stops turning
+        up in results.
+
+  episodic-semantic:
+    status: built
+    depth: 3
+    note: >-
+      An AI curator turns a session's guidance into lasting lessons, checked against what's
+      already known, that later sessions recall. It needs an AI key.
+    source: https://docs.cognee.ai/guides/session-distillation
+
+  schema:
+    status: partial
+    depth: 1
+    note: >-
+      Each user can get a preference record (off by default) that nudges what ranks first, but
+      new facts aren't weighed against it.
+    source: https://docs.cognee.ai/core-concepts/further-concepts/user-preferences
+
+flow:
+  steps:
+    - label: Remember
+      detail: Documents, code or chat go in; a session is kept short-term first.
+    - label: Build the map
+      detail: Entities and links are extracted and stored with the passages.
+    - label: Recall
+      detail: Search finds passages and walks the graph to connected facts.
+    - label: Improve
+      detail: "After a session: apply ratings, fold in the chat, distill lessons."
+  loop:
+    to: 2
+    label: next question
+
+checked: 2026-09-29
+sources:
+  - label: Cognee on GitHub
+    url: https://github.com/topoteretes/cognee
+  - label: Improve
+    url: https://docs.cognee.ai/core-concepts/main-operations/improve
+  - label: Session distillation
+    url: https://docs.cognee.ai/guides/session-distillation
+  - label: Feedback system
+    url: https://docs.cognee.ai/guides/feedback-system
+  - label: Merging duplicate entities
+    url: https://docs.cognee.ai/guides/memify-entity-deduplication
+  - label: Contradiction handling
+    url: https://docs.cognee.ai/examples/contradiction-handling
+  - label: Fact validity
+    url: https://docs.cognee.ai/guides/fact-validity
+  - label: User preferences (and their decay)
+    url: https://docs.cognee.ai/core-concepts/further-concepts/user-preferences
+  - label: Changelog
+    url: https://docs.cognee.ai/changelog
+  - label: Claude Code plugin
+    url: >-
+      https://github.com/topoteretes/cognee-integrations/tree/main/integrations/claude-code
+  - label: Cloud-only pages
+    url: https://docs.cognee.ai/cognee-cloud/local-ui
+  - label: Pricing
+    url: https://docs.cognee.ai/cognee-cloud/functionality/account-and-billing
